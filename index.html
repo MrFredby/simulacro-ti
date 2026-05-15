@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulacro de Seguridad — TI Corporativo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #c0392b; --red-light: #fdedec; --red-border: #f5b7b1;
+      --orange: #e67e22; --orange-light: #fef9e7; --orange-border: #fad7a0;
+      --green: #1e8449; --green-light: #eafaf1; --green-border: #a9dfbf;
+      --gray-50: #f8f9fa; --gray-100: #f1f3f5; --gray-200: #e9ecef;
+      --gray-400: #adb5bd; --gray-600: #6c757d; --gray-800: #343a40; --gray-900: #212529;
+      --font: 'DM Sans', sans-serif; --mono: 'DM Mono', monospace;
+    }
+    body { font-family: var(--font); background: #1a1a2e; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; }
+    body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 20% 40%, rgba(192,57,43,0.15) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 70%, rgba(230,126,34,0.1) 0%, transparent 60%); z-index: 0; pointer-events: none; }
+    .card { position: relative; z-index: 1; background: #fff; border-radius: 20px; max-width: 680px; width: 100%; overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,0.4); animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
+    .hero { background: linear-gradient(135deg, #c0392b 0%, #922b21 100%); padding: 2.5rem 2rem 2rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::after { content: ''; position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); width: 48px; height: 48px; background: #fff; border-radius: 50%; }
+    .hook-icon { font-size: 56px; line-height: 1; margin-bottom: 1rem; display: block; animation: wiggle 1s 0.8s ease-in-out both; }
+    @keyframes wiggle { 0% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 50% { transform: rotate(12deg); } 75% { transform: rotate(-8deg); } 100% { transform: rotate(0deg); } }
+    .hero h1 { font-size: 26px; font-weight: 600; color: #fff; margin-bottom: 0.5rem; letter-spacing: -0.3px; }
+    .hero p { font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+    .body { padding: 3rem 2rem 2rem; }
+    .notice { background: var(--orange-light); border: 1px solid var(--orange-border); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 2rem; display: flex; gap: 12px; align-items: flex-start; }
+    .notice-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+    .notice p { font-size: 14px; color: #6e4c00; line-height: 1.65; }
+    .section-title { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: var(--gray-800); margin-bottom: 1rem; }
+    .section-title .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); flex-shrink: 0; }
+    .clues { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
+    .clue { display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 12px; animation: fadeIn 0.5s both; }
+    .clue:nth-child(1) { animation-delay: 0.1s; } .clue:nth-child(2) { animation-delay: 0.2s; } .clue:nth-child(3) { animation-delay: 0.3s; } .clue:nth-child(4) { animation-delay: 0.4s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+    .clue-num { width: 28px; height: 28px; border-radius: 50%; background: var(--red); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .clue-title { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; }
+    .clue-text { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+    code { font-family: var(--mono); font-size: 12px; background: var(--gray-200); padding: 1px 6px; border-radius: 5px; color: var(--red); }
+    .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 2rem; }
+    .tip { background: var(--green-light); border: 1px solid var(--green-border); border-radius: 12px; padding: 14px; text-align: center; }
+    .tip-emoji { font-size: 24px; margin-bottom: 6px; display: block; }
+    .tip-text { font-size: 12px; font-weight: 500; color: var(--green); line-height: 1.5; }
+    .footer { background: var(--gray-100); border-top: 1px solid var(--gray-200); padding: 1.25rem 2rem; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--gray-800); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .footer-text { flex: 1; min-width: 180px; }
+    .footer-text p { font-size: 13px; color: var(--gray-600); line-height: 1.5; }
+    .footer-text strong { color: var(--gray-800); }
+    .badge { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; background: var(--gray-800); color: #fff; padding: 4px 12px; border-radius: 999px; white-space: nowrap; }
+    @media (max-width: 520px) { .body { padding: 2.5rem 1.25rem 1.5rem; } .hero { padding: 2rem 1.25rem 1.75rem; } .hero h1 { font-size: 22px; } .footer { flex-direction: column; align-items: flex-start; } }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="hero">
+    <span class="hook-icon" role="img" aria-label="anzuelo">🎣</span>
+    <h1>¡Caíste en un correo de phishing!</h1>
+    <p>Esto fue un simulacro de seguridad autorizado por el área de TI.<br>Ninguno de tus datos fue comprometido.</p>
+  </div>
+  <div class="body">
+    <div class="notice">
+      <span class="notice-icon" role="img" aria-label="atención">⚠️</span>
+      <p><strong>No te preocupes</strong> — este ejercicio tiene como objetivo ayudarte a identificar correos falsos <em>antes</em> de que sean una amenaza real. Lo importante es aprender a detectarlos a tiempo.</p>
+    </div>
+    <p class="section-title"><span class="dot" aria-hidden="true"></span>Señales que debiste notar en el correo</p>
+    <div class="clues">
+      <div class="clue">
+        <div class="clue-num" aria-hidden="true">1</div>
+        <div>
+          <p class="clue-title">Remitente con dominio incorrecto</p>
+          <p class="clue-text">El correo vino de <code>seguridad-ti@suporte-corp.net</code>, no del dominio oficial de tu empresa. Los correos internos siempre usan el dominio corporativo. Verifica siempre la dirección completa, no solo el nombre.</p>
+        </div>
+      </div>
+      <div class="clue">
+        <div class="clue-num" aria-hidden="true">2</div>
+        <div>
+          <p class="clue-title">Urgencia artificial y amenazas</p>
+          <p class="clue-text">Frases como <em>"tienes 2 horas"</em> o <em>"suspensión permanente"</em> buscan que actúes sin pensar. Los sistemas legítimos no te presionan de esa manera. Si sientes urgencia, es una señal de alerta.</p>
+        </div>
+      </div>
+      <div class="clue">
+        <div class="clue-num" aria-hidden="true">3</div>
+        <div>
+          <p class="clue-title">URL con dominio sospechoso</p>
+          <p class="clue-text">El enlace apuntaba a <code>.suporte-net.ru</code>, un dominio externo y desconocido. Antes de hacer clic, pasa el cursor sobre el enlace para ver la URL real en la barra de estado del navegador.</p>
+        </div>
+      </div>
+      <div class="clue">
+        <div class="clue-num" aria-hidden="true">4</div>
+        <div>
+          <p class="clue-title">Solicitud fuera de los canales oficiales</p>
+          <p class="clue-text">TI nunca te pedirá restablecer contraseñas a través de un enlace en un correo no solicitado. Si tienes dudas, accede directamente al portal interno o llama a soporte técnico.</p>
+        </div>
+      </div>
+    </div>
+    <p class="section-title"><span class="dot" aria-hidden="true" style="background:#1e8449;"></span>¿Qué hacer la próxima vez?</p>
+    <div class="tips">
+      <div class="tip"><span class="tip-emoji" role="img" aria-label="stop">🛑</span><p class="tip-text">Detente y piensa antes de hacer clic</p></div>
+      <div class="tip"><span class="tip-emoji" role="img" aria-label="lupa">🔍</span><p class="tip-text">Verifica el remitente y la URL del enlace</p></div>
+      <div class="tip"><span class="tip-emoji" role="img" aria-label="teléfono">📞</span><p class="tip-text">Llama a TI directamente si tienes dudas</p></div>
+      <div class="tip"><span class="tip-emoji" role="img" aria-label="bandera">🚩</span><p class="tip-text">Reporta correos sospechosos al área de soporte</p></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-icon" aria-hidden="true">🔒</div>
+    <div class="footer-text">
+      <p>¿Preguntas sobre este ejercicio? Contacta al equipo de soporte:</p>
+      <p><strong>ti@tuempresa.com</strong> &nbsp;|&nbsp; Ext. 1234</p>
+    </div>
+    <span class="badge">Simulacro de TI</span>
+  </div>
+</div>
+</body>
+</html>
